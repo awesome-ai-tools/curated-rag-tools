@@ -1,0 +1,41 @@
+name: Check Links
+
+on:
+  schedule:
+    - cron: '0 9 * * 1'  # Every Monday at 9:00 UTC
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'README.md'
+      - 'docs/**'
+
+jobs:
+  linkChecker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Link Checker
+        id: lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --verbose
+            --no-progress
+            --accept 100..=399
+            --timeout 30
+            --max-retries 3
+            --max-concurrency 10
+            './README.md'
+            './docs/**/*.html'
+          fail: false
+
+      - name: Create Issue From Lychee Output
+        if: steps.lychee.outputs.exit_code != 0
+        uses: peter-evans/create-issue-from-file@v5
+        with:
+          title: "Link Checker: Broken links found"
+          content-filepath: ./lychee/out.md
+          labels: broken-link

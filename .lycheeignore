@@ -1,0 +1,22 @@
+# Lychee link checker ignore list
+# https://lychee.cli.rs/
+
+# Rate-limited or requires authentication
+https://www.linkedin.com/.*
+https://twitter.com/.*
+https://x.com/.*
+
+# Localhost and local development
+http://localhost.*
+http://127.0.0.1.*
+
+# Known to block automated requests
+https://www.google.com/.*
+https://docs.google.com/.*
+
+# Dynamic pages that may not resolve in CI
+https://smith.langchain.com/
+https://cloud.llamaindex.ai/
+
+# Shield badges
+https://img.shields.io/.*

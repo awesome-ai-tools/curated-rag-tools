@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curated RAG Tools - Retrieval-Augmented Generation Tools Directory</title>
+  <meta name="description" content="A curated directory of tools, frameworks, databases, and services for building Retrieval-Augmented Generation (RAG) systems.">
+  <style>
+    :root {
+      --bg-primary: #0d1117;
+      --bg-secondary: #161b22;
+      --bg-tertiary: #21262d;
+      --border: #30363d;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --accent-blue: #58a6ff;
+      --accent-purple: #bc8cff;
+      --accent-green: #3fb950;
+      --accent-orange: #d29922;
+      --accent-red: #f85149;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 20px 0;
+      background: var(--bg-secondary);
+    }
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+    }
+    .header-actions { display: flex; gap: 12px; align-items: center; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      background: var(--bg-tertiary);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn:hover { border-color: var(--accent-blue); color: var(--accent-blue); }
+    .btn-primary {
+      background: linear-gradient(135deg, #238636, #2ea043);
+      border-color: #238636;
+      color: #fff;
+    }
+    .btn-primary:hover { background: linear-gradient(135deg, #2ea043, #3fb950); border-color: #3fb950; color: #fff; }
+    .hero { text-align: center; padding: 60px 0 40px; }
+    .hero h1 {
+      font-size: 48px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin: 0 auto 32px;
+    }
+    .featured {
+      background: linear-gradient(135deg, rgba(88,166,255,0.08), rgba(188,140,255,0.08));
+      border: 1px solid rgba(88,166,255,0.2);
+      border-radius: 12px;
+      padding: 24px 32px;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+    .featured-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+    .featured h3 { font-size: 20px; margin-bottom: 8px; }
+    .featured h3 a { color: var(--accent-blue); text-decoration: none; }
+    .featured h3 a:hover { text-decoration: underline; }
+    .featured p { color: var(--text-secondary); font-size: 15px; margin-bottom: 12px; }
+    .featured-links a {
+      color: var(--accent-blue);
+      text-decoration: none;
+      font-size: 14px;
+      margin: 0 8px;
+    }
+    .featured-links a:hover { text-decoration: underline; }
+    .search-bar {
+      position: relative;
+      max-width: 600px;
+      margin: 0 auto 32px;
+    }
+    .search-bar input {
+      width: 100%;
+      padding: 14px 20px 14px 48px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-primary);
+      font-size: 16px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .search-bar input:focus { border-color: var(--accent-blue); }
+    .search-bar input::placeholder { color: var(--text-muted); }
+    .search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 18px;
+    }
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+    .filter-btn {
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover { border-color: var(--accent-blue); color: var(--accent-blue); }
+    .filter-btn.active { background: var(--accent-blue); color: #fff; border-color: var(--accent-blue); }
+    .tool-count {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 16px;
+      margin-bottom: 60px;
+    }
+    .tool-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      transition: border-color 0.2s, transform 0.1s;
+    }
+    .tool-card:hover { border-color: var(--accent-blue); transform: translateY(-1px); }
+    .tool-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+    .tool-name { font-size: 17px; font-weight: 600; color: var(--accent-blue); }
+    .tool-category {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .cat-framework { background: rgba(88,166,255,0.15); color: var(--accent-blue); }
+    .cat-vector { background: rgba(188,140,255,0.15); color: var(--accent-purple); }
+    .cat-embedding { background: rgba(63,185,80,0.15); color: var(--accent-green); }
+    .cat-loader { background: rgba(210,153,34,0.15); color: var(--accent-orange); }
+    .cat-chunking { background: rgba(248,81,73,0.15); color: var(--accent-red); }
+    .cat-retrieval { background: rgba(88,166,255,0.15); color: #79c0ff; }
+    .cat-eval { background: rgba(188,140,255,0.15); color: #d2a8ff; }
+    .cat-service { background: rgba(63,185,80,0.15); color: #56d364; }
+    .tool-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+    .tool-links { display: flex; gap: 12px; flex-wrap: wrap; }
+    .tool-links a {
+      font-size: 13px;
+      color: var(--accent-blue);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .tool-links a:hover { text-decoration: underline; }
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      max-width: 500px;
+      width: 90%;
+    }
+    .modal h2 { font-size: 22px; margin-bottom: 8px; }
+    .modal p { color: var(--text-secondary); font-size: 14px; margin-bottom: 20px; }
+    .modal .form-group { margin-bottom: 16px; }
+    .modal label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 6px;
+      color: var(--text-secondary);
+    }
+    .modal input, .modal select, .modal textarea {
+      width: 100%;
+      padding: 10px 14px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-primary);
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+    }
+    .modal input:focus, .modal select:focus, .modal textarea:focus { border-color: var(--accent-blue); }
+    .modal textarea { resize: vertical; min-height: 80px; }
+    .modal-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px; }
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+    footer a { color: var(--accent-blue); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    .no-results {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-muted);
+      grid-column: 1 / -1;
+    }
+    .no-results h3 { font-size: 20px; margin-bottom: 8px; color: var(--text-secondary); }
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 32px; }
+      .hero p { font-size: 16px; }
+      .tools-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <a href="#" class="logo">Curated RAG Tools</a>
+      <div class="header-actions">
+        <a href="https://github.com/awesome-ai-tools/curated-rag-tools" class="btn" target="_blank">&#9733; Star on GitHub</a>
+        <button class="btn btn-primary" onclick="openModal()">+ Submit Tool</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="hero">
+      <h1>Curated RAG Tools</h1>
+      <p>A comprehensive directory of tools, frameworks, databases, and services for building Retrieval-Augmented Generation systems.</p>
+    </div>
+
+    <div class="featured">
+      <div class="featured-badge">Featured</div>
+      <h3><a href="https://www.ssemble.com" target="_blank">Ssemble AI Clipping</a></h3>
+      <p>AI-powered video clipping tool that turns long videos into viral short clips. Automatically identifies the most engaging moments, adds captions, and exports in vertical format.</p>
+      <div class="featured-links">
+        <a href="https://www.ssemble.com" target="_blank">Website</a>
+        <a href="https://www.npmjs.com/package/@ssemble/mcp-server" target="_blank">MCP Server (npm)</a>
+      </div>
+    </div>
+
+    <div class="search-bar">
+      <span class="search-icon">&#128269;</span>
+      <input type="text" id="searchInput" placeholder="Search tools by name or description..." oninput="filterTools()">
+    </div>
+
+    <div class="filters" id="filters">
+      <button class="filter-btn active" data-category="all" onclick="setFilter('all', this)">All</button>
+      <button class="filter-btn" data-category="framework" onclick="setFilter('framework', this)">RAG Frameworks</button>
+      <button class="filter-btn" data-category="vector" onclick="setFilter('vector', this)">Vector Databases</button>
+      <button class="filter-btn" data-category="embedding" onclick="setFilter('embedding', this)">Embeddings</button>
+      <button class="filter-btn" data-category="loader" onclick="setFilter('loader', this)">Document Loaders</button>
+      <button class="filter-btn" data-category="chunking" onclick="setFilter('chunking', this)">Chunking</button>
+      <button class="filter-btn" data-category="retrieval" onclick="setFilter('retrieval', this)">Retrieval &amp; Reranking</button>
+      <button class="filter-btn" data-category="eval" onclick="setFilter('eval', this)">Evaluation</button>
+      <button class="filter-btn" data-category="service" onclick="setFilter('service', this)">RAG-as-a-Service</button>
+    </div>
+
+    <div class="tool-count" id="toolCount"></div>
+    <div class="tools-grid" id="toolsGrid"></div>
+  </main>
+
+  <div class="modal-overlay" id="submitModal">
+    <div class="modal">
+      <h2>Submit a RAG Tool</h2>
+      <p>Suggest a tool to add to the curated list. Submissions are reviewed before being added.</p>
+      <div class="form-group">
+        <label>Tool Name *</label>
+        <input type="text" id="submitName" placeholder="e.g., LangChain">
+      </div>
+      <div class="form-group">
+        <label>Category *</label>
+        <select id="submitCategory">
+          <option value="">Select a category</option>
+          <option value="framework">RAG Framework</option>
+          <option value="vector">Vector Database</option>
+          <option value="embedding">Embedding Model</option>
+          <option value="loader">Document Loader / Parser</option>
+          <option value="chunking">Chunking / Preprocessing</option>
+          <option value="retrieval">Retrieval / Reranking</option>
+          <option value="eval">Evaluation</option>
+          <option value="service">RAG-as-a-Service</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Repository / Website URL *</label>
+        <input type="url" id="submitUrl" placeholder="https://github.com/org/repo">
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea id="submitDesc" placeholder="Brief description of the tool..."></textarea>
+      </div>
+      <div class="modal-actions">
+        <button class="btn" onclick="closeModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="submitTool()">Submit via GitHub Issue</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <p>
+        <a href="https://github.com/awesome-ai-tools/curated-rag-tools" target="_blank">GitHub</a> &middot;
+        <a href="https://github.com/awesome-ai-tools/curated-rag-tools/blob/main/CONTRIBUTING.md" target="_blank">Contributing</a> &middot;
+        <a href="https://github.com/awesome-ai-tools/curated-rag-tools/blob/main/LICENSE" target="_blank">MIT License</a>
+      </p>
+      <p style="margin-top:8px;">&copy; 2026 awesome-ai-tools</p>
+    </div>
+  </footer>
+
+  <script>
+    const tools = [
+      { name: "LangChain", category: "framework", desc: "Comprehensive framework for developing LLM-powered applications with built-in RAG chains, document loaders, and retriever abstractions.", links: { GitHub: "https://github.com/langchain-ai/langchain", Docs: "https://python.langchain.com/" } },
+      { name: "LlamaIndex", category: "framework", desc: "Data framework for connecting custom data sources to LLMs with advanced indexing, retrieval, and query engine capabilities.", links: { GitHub: "https://github.com/run-llama/llama_index", Docs: "https://docs.llamaindex.ai/" } },
+      { name: "Haystack", category: "framework", desc: "Open-source framework by deepset for building production-ready NLP and RAG pipelines with a modular architecture.", links: { GitHub: "https://github.com/deepset-ai/haystack", Docs: "https://docs.haystack.deepset.ai/" } },
+      { name: "RAGFlow", category: "framework", desc: "Open-source RAG engine with deep document understanding, template-based chunking, and grounded citations.", links: { GitHub: "https://github.com/infiniflow/ragflow", Website: "https://ragflow.io/" } },
+      { name: "PrivateGPT", category: "framework", desc: "Production-ready AI project for privately interacting with documents using LLMs. Supports 100% offline deployments.", links: { GitHub: "https://github.com/zylon-ai/private-gpt", Docs: "https://docs.privategpt.dev/" } },
+      { name: "R2R", category: "framework", desc: "Production-ready RAG engine by SciPhi with built-in auth, ingestion, search, and management APIs.", links: { GitHub: "https://github.com/SciPhi-AI/R2R", Docs: "https://r2r-docs.sciphi.ai/" } },
+      { name: "Pinecone", category: "vector", desc: "Fully managed vector database optimized for ML applications with low-latency similarity search at scale.", links: { Website: "https://www.pinecone.io/", Docs: "https://docs.pinecone.io/" } },
+      { name: "Weaviate", category: "vector", desc: "Open-source vector database supporting hybrid search, vectorization modules, and GraphQL API.", links: { GitHub: "https://github.com/weaviate/weaviate", Docs: "https://weaviate.io/developers/weaviate" } },
+      { name: "Qdrant", category: "vector", desc: "Open-source vector similarity search engine written in Rust with filtering, payloads, and distributed deployments.", links: { GitHub: "https://github.com/qdrant/qdrant", Docs: "https://qdrant.tech/documentation/" } },
+      { name: "Milvus", category: "vector", desc: "Open-source vector database for scalable similarity search supporting billions of vectors and GPU acceleration.", links: { GitHub: "https://github.com/milvus-io/milvus", Docs: "https://milvus.io/docs" } },
+      { name: "Chroma", category: "vector", desc: "Open-source embedding database for AI-native applications with a simple API and built-in embedding functions.", links: { GitHub: "https://github.com/chroma-core/chroma", Docs: "https://docs.trychroma.com/" } },
+      { name: "pgvector", category: "vector", desc: "Open-source PostgreSQL extension for vector similarity search alongside traditional SQL queries.", links: { GitHub: "https://github.com/pgvector/pgvector" } },
+      { name: "FAISS", category: "vector", desc: "Meta AI library for efficient similarity search and clustering of dense vectors with CPU and GPU support.", links: { GitHub: "https://github.com/facebookresearch/faiss", Docs: "https://faiss.ai/" } },
+      { name: "LanceDB", category: "vector", desc: "Open-source serverless vector database built on Lance columnar format with zero infra and automatic versioning.", links: { GitHub: "https://github.com/lancedb/lancedb", Docs: "https://lancedb.github.io/lancedb/" } },
+      { name: "OpenAI Embeddings", category: "embedding", desc: "State-of-the-art text-embedding-3 models with up to 3072 dimensions and native dimensionality reduction.", links: { Docs: "https://platform.openai.com/docs/guides/embeddings" } },
+      { name: "Cohere Embed v3", category: "embedding", desc: "Multilingual embedding model supporting 100+ languages with built-in compression and task-optimized variants.", links: { Docs: "https://docs.cohere.com/docs/cohere-embed" } },
+      { name: "BGE Embeddings", category: "embedding", desc: "Open-source embedding models from BAAI achieving top MTEB performance, from 33M to 335M parameters.", links: { GitHub: "https://github.com/FlagOpen/FlagEmbedding", HuggingFace: "https://huggingface.co/BAAI/bge-large-en-v1.5" } },
+      { name: "Sentence Transformers", category: "embedding", desc: "Python framework for state-of-the-art sentence, text, and image embeddings with hundreds of pre-trained models.", links: { GitHub: "https://github.com/UKPLab/sentence-transformers", Docs: "https://www.sbert.net/" } },
+      { name: "Voyage AI", category: "embedding", desc: "High-performance embedding models optimized for retrieval with domain-specific models for code, legal, and finance.", links: { Website: "https://www.voyageai.com/", Docs: "https://docs.voyageai.com/" } },
+      { name: "Unstructured", category: "loader", desc: "Open-source library for preprocessing and ingesting documents in any format including PDFs, HTML, Word, and images.", links: { GitHub: "https://github.com/Unstructured-IO/unstructured", Docs: "https://docs.unstructured.io/" } },
+      { name: "Docling", category: "loader", desc: "IBM's open-source document parser converting PDFs, DOCX, PPTX, and images into structured formats with OCR support.", links: { GitHub: "https://github.com/DS4SD/docling", Docs: "https://ds4sd.github.io/docling/" } },
+      { name: "Firecrawl", category: "loader", desc: "API service for turning websites into LLM-ready markdown with JavaScript rendering and clean structured output.", links: { GitHub: "https://github.com/mendableai/firecrawl", Website: "https://www.firecrawl.dev/" } },
+      { name: "MarkItDown", category: "loader", desc: "Python tool by Microsoft for converting various files (PDF, DOCX, XLSX, images, audio) to Markdown for LLM ingestion.", links: { GitHub: "https://github.com/microsoft/markitdown" } },
+      { name: "Chonkie", category: "chunking", desc: "Lightweight, fast chunking library supporting token, word, sentence, semantic, and SDPM chunking strategies.", links: { GitHub: "https://github.com/bhavnicksm/chonkie", Docs: "https://docs.chonkie.ai/" } },
+      { name: "Cohere Rerank", category: "retrieval", desc: "Neural reranking API that rescores search results for dramatically improved relevance across multilingual content.", links: { Docs: "https://docs.cohere.com/docs/reranking" } },
+      { name: "ColBERT", category: "retrieval", desc: "Late interaction retrieval model enabling scalable BERT-based search using contextualized token-level matching.", links: { GitHub: "https://github.com/stanford-futuredata/ColBERT" } },
+      { name: "FlashRank", category: "retrieval", desc: "Ultra-lightweight Python library for reranking search results. Runs on CPU with minimal dependencies.", links: { GitHub: "https://github.com/PrithivirajDamodaran/FlashRank" } },
+      { name: "RAGAS", category: "eval", desc: "Open-source framework for evaluating RAG pipelines with metrics for faithfulness, relevancy, and context quality.", links: { GitHub: "https://github.com/explodinggradients/ragas", Docs: "https://docs.ragas.io/" } },
+      { name: "DeepEval", category: "eval", desc: "Open-source evaluation framework for LLMs with 14+ metrics including RAG-specific contextual relevancy.", links: { GitHub: "https://github.com/confident-ai/deepeval", Docs: "https://docs.confident-ai.com/" } },
+      { name: "Phoenix (Arize)", category: "eval", desc: "Open-source observability library for LLM applications with tracing, evaluation, and dataset curation.", links: { GitHub: "https://github.com/Arize-ai/phoenix", Docs: "https://docs.arize.com/phoenix" } },
+      { name: "Vectara", category: "service", desc: "End-to-end RAG-as-a-service platform with built-in embedding, indexing, retrieval, reranking, and grounded generation.", links: { Website: "https://vectara.com/", Docs: "https://docs.vectara.com/" } },
+      { name: "Zilliz Cloud", category: "service", desc: "Fully managed Milvus vector database service with built-in pipelines for embedding, ingestion, and search at scale.", links: { Website: "https://zilliz.com/", Docs: "https://docs.zilliz.com/" } },
+      { name: "Azure AI Search", category: "service", desc: "Enterprise search service by Microsoft with vector search, semantic ranking, and hybrid retrieval.", links: { Website: "https://azure.microsoft.com/en-us/products/ai-services/ai-search", Docs: "https://learn.microsoft.com/en-us/azure/search/" } },
+    ];
+
+    const categoryLabels = {
+      framework: "RAG Framework",
+      vector: "Vector DB",
+      embedding: "Embedding",
+      loader: "Doc Loader",
+      chunking: "Chunking",
+      retrieval: "Retrieval",
+      eval: "Evaluation",
+      service: "Service"
+    };
+
+    let activeFilter = "all";
+
+    function renderTools() {
+      const query = document.getElementById("searchInput").value.toLowerCase();
+      const grid = document.getElementById("toolsGrid");
+      const countEl = document.getElementById("toolCount");
+
+      const filtered = tools.filter(function(t) {
+        const matchesCategory = activeFilter === "all" || t.category === activeFilter;
+        const matchesSearch = !query || t.name.toLowerCase().includes(query) || t.desc.toLowerCase().includes(query);
+        return matchesCategory && matchesSearch;
+      });
+
+      countEl.textContent = "Showing " + filtered.length + " of " + tools.length + " tools";
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '<div class="no-results"><h3>No tools found</h3><p>Try a different search term or category filter.</p></div>';
+        return;
+      }
+
+      grid.innerHTML = filtered.map(function(t) {
+        var linksHtml = Object.keys(t.links).map(function(label) {
+          return '<a href="' + t.links[label] + '" target="_blank">' + label + ' &#8599;</a>';
+        }).join("");
+
+        return '<div class="tool-card">' +
+          '<div class="tool-header">' +
+            '<span class="tool-name">' + t.name + '</span>' +
+            '<span class="tool-category cat-' + t.category + '">' + categoryLabels[t.category] + '</span>' +
+          '</div>' +
+          '<p class="tool-desc">' + t.desc + '</p>' +
+          '<div class="tool-links">' + linksHtml + '</div>' +
+        '</div>';
+      }).join("");
+    }
+
+    function setFilter(category, el) {
+      activeFilter = category;
+      document.querySelectorAll(".filter-btn").forEach(function(b) { b.classList.remove("active"); });
+      el.classList.add("active");
+      renderTools();
+    }
+
+    function filterTools() { renderTools(); }
+
+    function openModal() { document.getElementById("submitModal").classList.add("active"); }
+    function closeModal() { document.getElementById("submitModal").classList.remove("active"); }
+
+    function submitTool() {
+      var name = document.getElementById("submitName").value.trim();
+      var category = document.getElementById("submitCategory").value;
+      var url = document.getElementById("submitUrl").value.trim();
+      var desc = document.getElementById("submitDesc").value.trim();
+
+      if (!name || !category || !url) {
+        alert("Please fill in all required fields.");
+        return;
+      }
+
+      var title = encodeURIComponent("[Addition] " + name);
+      var body = encodeURIComponent(
+        "## Tool Information\n\n**Name:** " + name + "\n**Website/Repository:** " + url + "\n\n## Category\n\n" + categoryLabels[category] + "\n\n## Description\n\n" + (desc || "N/A")
+      );
+
+      window.open(
+        "https://github.com/awesome-ai-tools/curated-rag-tools/issues/new?title=" + title + "&body=" + body + "&labels=addition",
+        "_blank"
+      );
+      closeModal();
+    }
+
+    document.getElementById("submitModal").addEventListener("click", function(e) {
+      if (e.target === this) closeModal();
+    });
+
+    renderTools();
+  </script>
+</body>
+</html>
