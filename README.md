@@ -171,6 +171,7 @@ Managed platforms and cloud services for deploying RAG without building infrastr
 | **Amazon Bedrock Knowledge Bases** | Managed RAG service on AWS that connects foundation models to enterprise data sources with automated ingestion and retrieval. | [Website](https://aws.amazon.com/bedrock/knowledge-bases/) &#124; [Docs](https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base.html) |
 | **Vertex AI Search** | Google Cloud's managed search and RAG service for enterprise data. Supports grounded generation with citations from structured and unstructured sources. | [Website](https://cloud.google.com/vertex-ai-search-and-conversation) &#124; [Docs](https://cloud.google.com/generative-ai-app-builder/docs/enterprise-search-introduction) |
 | **Elasticsearch Vector Search** | Vector search and kNN capabilities in Elasticsearch with support for hybrid scoring, reciprocal rank fusion, and ELSER sparse retrieval. | [Website](https://www.elastic.co/elasticsearch/vector-database) &#124; [Docs](https://www.elastic.co/guide/en/elasticsearch/reference/current/knn-search.html) |
+| **HydraDB** | Fast, scalable graph database with a built-in retrieval pipeline that returns ranked results with graph context. | [Website](https://hydradb.com/) &#124; [Docs](https://docs.hydradb.com/) |
 
 ---
 
